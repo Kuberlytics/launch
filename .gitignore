@@ -1,0 +1,16 @@
+*.yaml
+*.json
+*.txt
+*.ipynb_checkpoints*
+/archive
+.DS_STORE
+*.pyc
+.nbgrad*
+.vscode*
+/data/twitter/*/*.json
+/data/twitter/*/*.csv
+/sshbackup
+/data
+.pachyderm*
+.ipynb_checkpoints/*
+*checkpoint.ipynb

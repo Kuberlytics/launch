@@ -1,0 +1,9 @@
+
+file: screen_names.txt  #Filename for list of twitter IDs.
+config: /config/twitter  #Spot for the configuration.
+data: /data/twitter      #Filename for data.
+consumer_key: ******************************************
+consumer_secret: ******************************************
+access_token: ******************************************
+access_token_secret: ******************************************
+sleep_interval: 5 ## twitter api access limit Requests / 15-min window (user auth) 180 => 5 sec/request

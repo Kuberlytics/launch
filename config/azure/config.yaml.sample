@@ -1,0 +1,4 @@
+resource_group: kuberlytics             #Project name can be anything, but it should already be created.
+cluster_name: kuberlytics         #Name your cluster whatever you like
+location: eastus                 #Selection from az account list-locations.
+dns_prefix: kuberlytics                 #Selection from gcloud compute regions list.
