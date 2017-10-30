@@ -32,3 +32,8 @@ docker build -t kuberlytics/jupyter-singleuser-controller:latest -t kuberlytics/
 ```
 docker run -it --rm -p 8888:8888  -v /Users/jasonkuruzovich/githubdesktop/0_class:/home/jovyan/work --user root -e GRANT_SUDO=yes kuberlytics/jupyter-singleuser-controller:latest
 ```
+
+#Please set to push to 2 repositories.
+
+git remote set-url --add --push origin git@github.com:Kuberlytics/admin-tools.git
+git remote set-url --add --push origin git@gitlab.com:Kuberlytics/admin-tools.git
