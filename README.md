@@ -1,4 +1,9 @@
+
 # Kuberlytics Administrative Tools
+[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/kuberlytics/admin-tools/master)
+
+
+
 Jupyter is an amazing interactive tool for analytics, but did you know that you an use it to launch your own cloud based data science stack on the Google Cloud platform, Azure (coming soon), or Amazon Web Services (coming soon)? We have put together a few powerful tools here including:
 
 - Kubernetes: You probably have heard of containers and might even know the Docker whale. Kubernetes is a container orchestration platform that makes a great place to run containers and can be used on a variety of cloud platforms. In an era of "deep learning", you really need access to GPUs don't you? Well, the cloud is a great place to find them.
@@ -37,4 +42,5 @@ docker run -it --rm -p 8888:8888  -v /Users/jasonkuruzovich/githubdesktop/0_clas
 ```
 git remote set-url --add --push origin git@github.com:Kuberlytics/admin-tools.git
 git remote set-url --add --push origin git@gitlab.com:Kuberlytics/admin-tools.git
+git remote set-url origin git@gitlab.com:Kuberlytics/admin-tools.git
 ```
