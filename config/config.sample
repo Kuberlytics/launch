@@ -1,0 +1,68 @@
+#Where are you running notebooks? This is used for path.
+docker: true     #True if executing on the Kuberlytics Docker Stack.
+docker_path: /home/jovyan/work/admin-tools      #This should not change.
+local_path: /Users/*******/admin-tools #This is the local path
+cloud_provider: azure   #google or azure
+#Start of Google Specific Configuration
+g_project: kuberlytics             #Google project name
+g_cluster_name: kuberlytics        #Name of your Google Cluster
+g_region: us-east1                 #Selection from gcloud compute regions list.
+g_zone: us-east1-b                  #Selection from gcloud compute regions list.
+g_machine_type: n1-highmem-4        #Type of Server
+g_account: you@mail.com    #Email Associated with the account.
+g_authorization_file: auth.json     #Service account authorization file.
+g_service_account_name: kuberlytics2  #Service account name.
+g_fixedip_namespace: jupyterhub-dojo
+g_num_nodes: 1                      #The default number of nodes (servers)
+g_num_nodes_class: 3
+g_max_nodes: 4
+#Start of Azure Configuration
+a_resource_group: kubwestus2rpi     #Resource groups are used to separate projects.
+a_cluster_name: kubwestus2rpi         #Name your cluster whatever you like.
+a_location: westus2                 #Selection from `az account list-locations`.
+a_dns_prefix: kubwestus2rpi          #Selection from gcloud compute regions list.
+a_machine_type: Standard_D3_v2        #Type of Server https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs
+a_num_nodes: 1                      #The default number of nodes (servers)
+a_num_nodes_class: 3
+a_max_nodes: 4
+a_storage_account: pach          #For use with Pachyderm
+a_container_name: pach           #For use with Pachyderm
+a_storage_name: pach2-disk.vhd   #For use with Pachyderm
+a_storage_size: 1                #For use with Pachyderm Storage account size in GB.
+#Start of Azure Configuration
+jup_rebuild_config: false
+jup_url: lab.analyticsdojo.com
+jup_ssl: false
+jup_email: ******@*****.com    #This is used for letsencrypt
+jup_namespace: dojo      #Generally the namespace and releasename should be teh same.
+jup_releasename: dojo
+jup_fixed_ip: **.***.**.***
+jup_set_fixed_ip: false
+jup_helm_repo: https://jupyterhub.github.io/helm-chart/
+jup_version: v0.4
+jup_config_init: https://raw.githubusercontent.com/jupyterhub/helm-chart/master/jupyterhub/values.yaml
+jup_github_auth:
+  type: github
+  github:
+    clientId: "********************"
+    clientSecret: "***************************"
+    callbackUrl: "http://******************/hub/oauth_callback"
+jup_google_auth:
+  type: google
+  google:
+    clientId: "******************.apps.googleusercontent.com"
+    clientSecret: "********************"
+    callbackUrl: "http://******************/hub/oauth_callback"
+    hostedDomain: "*****************.edu" #Your University URL
+    loginService: "***************"   #Your University name
+jup_dummy_auth:
+  type: dummy
+  dummy:
+    password: "********"
+jup_admin:
+  access: true
+  users: ['********']
+jup_singleuser:
+  image:
+    name: analyticsdojo/jupyter
+    tag: 53bf009
