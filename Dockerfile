@@ -66,18 +66,4 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update && apt-get install -yq google-cloud-sdk
 
 USER jovyan
-#Jason Added
-RUN conda install -c conda-forge --quiet --yes \
-    'fastparquet=0.1*' \
-    'nbpresent=3.0*' \
-    'ipython_unittest=0.2*' \
-    'ruamel.yaml=0.15*'
-RUN conda install --quiet --yes  \
-    'pandas-datareader=0.5*' \
-    'beautifulsoup4=4.6*'
-
-RUN /opt/conda/bin/pip install twitter==1.17.1
-RUN conda install -c conda-forge --quiet --yes \
-    'plotly=2.0*'
-
-COPY . /home/jovyan/  
+COPY . /home/jovyan/
