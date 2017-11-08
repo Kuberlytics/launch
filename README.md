@@ -37,6 +37,11 @@ docker build -t kuberlytics/jupyter-singleuser-controller:latest -t kuberlytics/
 ```
 docker run -it --rm -p 8888:8888  -v /Users/jasonkuruzovich/githubdesktop/0_class:/home/jovyan/work --user root -e GRANT_SUDO=yes kuberlytics/jupyter-singleuser-controller:latest
 ```
+### To simulate online version without local sharing of volume.
+```
+docker run -it --rm -p 8888:8888  --user root -e GRANT_SUDO=yes kuberlytics/jupyter-singleuser-controller:latest
+```
+
 
 #### Please set to push to 2 repositories. (Make sure ssh keys current.)
 ```

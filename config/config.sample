@@ -33,10 +33,10 @@ a_storage_size: 1                #For use with Pachyderm Storage account size in
 jup_rebuild_config: false
 jup_url: lab.analyticsdojo.com
 jup_ssl: false
-jup_email: ******@*****.com    #This is used for letsencrypt
+jup_email: you@yourdomain.com    #This is used for letsencrypt
 jup_namespace: dojo      #Generally the namespace and releasename should be teh same.
 jup_releasename: dojo
-jup_fixed_ip: **.***.**.***
+jup_fixed_ip:               #Set as reserved IP address.
 jup_set_fixed_ip: false
 jup_helm_repo: https://jupyterhub.github.io/helm-chart/
 jup_version: v0.5.0-e154ab7

@@ -80,4 +80,4 @@ RUN /opt/conda/bin/pip install twitter==1.17.1
 RUN conda install -c conda-forge --quiet --yes \
     'plotly=2.0*'
 
-COPY . /home/jovyan/
+COPY . /home/jovyan/  
