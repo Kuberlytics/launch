@@ -28,6 +28,9 @@ RUN go get github.com/Microsoft/azure-vhd-utils
 RUN go install github.com/Microsoft/azure-vhd-utils
 RUN go get github.com/Azure/azure-sdk-for-go/storage
 ENV PATH $GOPATH/bin:$GOROOT/bin:/${PATH}
+RUN chown jovyan:100 $GOPATH && \
+    fix-permissions $GOPATH
+
 
 #Kubectrl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -66,4 +69,9 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update && apt-get install -yq google-cloud-sdk
 
 USER jovyan
-COPY . /home/jovyan/
+RUN conda install -c conda-forge --quiet --yes \
+    'ruamel.yaml=0.15*'
+
+COPY --chown=jovyan:100 . /home/jovyan/admin-tools
+COPY --chown=jovyan:100 ./README.md /home/jovyan/README.md
+COPY --chown=jovyan:100 ./config/config.sample /home/jovyan/admin-tools/config/config.yaml

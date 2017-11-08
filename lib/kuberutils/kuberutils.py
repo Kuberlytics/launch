@@ -77,19 +77,25 @@ def azure_commands(cf_a):
     cf_a['set_zone']="echo 'No need to set project in Azure.'"
     cf_a['delete_project']="az group delete --name="+cf_a['a_resource_group']+" --yes --no-wait"
     cf_a['list-locations']="az account list-locations"
-    cf_a['create_cluster']="az acs create --orchestrator-type=kubernetes --resource-group="+cf_a['a_resource_group'] +" --name="+cf_a['a_cluster_name']+" --dns-prefix="+cf_a['a_dns_prefix']+" --agent-count="+str(cf_a['a_num_nodes'])+" --agent-vm-size="+cf_a['a_machine_type']+" --generate-ssh-keys --no-wait"
-    cf_a['describe_cluster']="az acs list  --resource-group="+cf_a['a_resource_group']
     cf_a['autoscale']="echo 'Autoscaling currently not possible.'"
-    cf_a['create_cluster_aks']="az acs create --orchestrator-type=kubernetes --resource-group="+cf_a['a_resource_group'] +" --name="+cf_a['a_cluster_name']+" --dns-prefix="+cf_a['a_dns_prefix']+" --agent-count="+str(cf_a['a_num_nodes'])+" --agent-vm-size="+cf_a['a_machine_type']+" --generate-ssh-keys --no-wait"
-    cf_a['describe_cluster_aks']="az acs list  --resource-group="+cf_a['a_resource_group']
-    cf_a['delete_cluster']="az acs delete  --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --no-wait"
-    cf_a['get_credentials']="az acs kubernetes get-credentials --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']
+    if cf_a['a_service_type']=="aks":
+        cf_a['create_cluster']="az aks create --resource-group="+cf_a['a_resource_group'] +" --name="+cf_a['a_cluster_name']+" --agent-count="+str(cf_a['a_num_nodes'])+" --agent-vm-size="+cf_a['a_machine_type']+" --generate-ssh-keys --no-wait"
+        cf_a['describe_cluster']="az aks list --resource-group="+cf_a['a_resource_group']
+        cf_a['delete_cluster']="az aks delete --name="+cf_a['a_cluster_name']+" --resource-group="+cf_a['a_resource_group']+" --no-wait"
+        cf_a['get_credentials']="az aks get-credentials --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']
+        cf_a['normal_size_cluster']="az aks scale  --agent-count "+str(cf_a['a_num_nodes']) +" --name="+cf_a['a_cluster_name']+" --resource-group="+cf_a['a_resource_group']
+        cf_a['class_size_cluster']="az aks scale --agent-count "+ str(cf_a['a_num_nodes_class'])+" --name="+cf_a['a_cluster_name']+" --resource-group="+cf_a['a_resource_group']
+    elif cf_a['a_service_type']=="acs":
+        cf_a['create_cluster']="az acs create --orchestrator-type=kubernetes --resource-group="+cf_a['a_resource_group'] +" --name="+cf_a['a_cluster_name']+" --dns-prefix="+cf_a['a_dns_prefix']+" --agent-count="+str(cf_a['a_num_nodes'])+" --agent-vm-size="+cf_a['a_machine_type']+" --generate-ssh-keys --no-wait"
+        cf_a['describe_cluster']="az acs list  --resource-group="+cf_a['a_resource_group']
+        cf_a['delete_cluster']="az acs delete  --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --no-wait"
+        cf_a['get_credentials']="az acs kubernetes get-credentials --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']
+        cf_a['normal_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes'])
+        cf_a['class_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes_class'])
     cf_a['install_helm']='helm init --client-only'
     # Can't size to 0 cf_g['a_stop_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count 0"
-    cf_a['a_normal_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes'])
-    cf_a['a_class_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes_class'])
-    cf_a['a_create_storage']= "az storage account create --resource-group="+cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --sku=Standard_LRS  --name="+cf_a['a_storage_account']+" --kind=Storage"
-    cf_a['a_get_storage_key']="az storage account keys list --account-name="+cf_a['a_storage_account']+" --resource-group="+cf_a['a_resource_group']+" --output=json | jq .[0].value -r"
+    cf_a['create_storage']= "az storage account create --resource-group="+cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --sku=Standard_LRS  --name="+cf_a['a_storage_account']+" --kind=Storage"
+    cf_a['get_storage_key']="az storage account keys list --account-name="+cf_a['a_storage_account']+" --resource-group="+cf_a['a_resource_group']+" --output=json | jq .[0].value -r"
     return cf_a
 
 def jupyterhub_commands(cf_j):
@@ -186,6 +192,8 @@ def set_jupyterhub_config(cf):
         if cf['cloud_provider']=='azure':
             config['prePuller']=cf['jup_prePuller']
         ruamel.yaml.round_trip_dump(config, open(cf['jup_config'], 'w'))
+    else:
+        print("Currently the jup_rebuild_config parameter in the configuration file is set to false. Not rebuilding config.")
     return
 
 def bash_command2(command):

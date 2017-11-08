@@ -14,4 +14,7 @@
 .pachyderm*
 .ipynb_checkpoints/*
 *checkpoint.ipynb
-README.md.personal
+Dockerfile
+.dockerignore
+.gitlab-ci.yml
+Readme.md.personal

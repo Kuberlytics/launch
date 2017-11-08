@@ -17,6 +17,7 @@ g_num_nodes: 1                      #The default number of nodes (servers)
 g_num_nodes_class: 3
 g_max_nodes: 4
 #Start of Azure Configuration
+a_service_type: aks                 #aks is the next generation only available in westus2. acs is the more widely available service. 
 a_resource_group: kubwestus2rpi     #Resource groups are used to separate projects.
 a_cluster_name: kubwestus2rpi         #Name your cluster whatever you like.
 a_location: westus2                 #Selection from `az account list-locations`.
@@ -30,7 +31,7 @@ a_container_name: pach           #For use with Pachyderm
 a_storage_name: pach2-disk.vhd   #For use with Pachyderm
 a_storage_size: 1                #For use with Pachyderm Storage account size in GB.
 #Start of Azure Configuration
-jup_rebuild_config: false
+jup_rebuild_config: true
 jup_url: lab.analyticsdojo.com
 jup_ssl: false
 jup_email: you@yourdomain.com    #This is used for letsencrypt
