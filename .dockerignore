@@ -17,4 +17,4 @@
 Dockerfile
 .dockerignore
 .gitlab-ci.yml
-Readme.md.personal
+README.md.personal
