@@ -1,6 +1,6 @@
 #Where are you running notebooks? This is used for path.
 docker: true     #True if executing on the Kuberlytics Docker Stack.
-docker_path: /home/jovyan/work/admin-tools      #This should not change.
+docker_path: /home/jovyan/admin-tools      #This should not change.
 local_path: /Users/*******/admin-tools #This is the local path
 cloud_provider: azure   #google or azure
 #Start of Google Specific Configuration
@@ -66,3 +66,5 @@ jup_singleuser:
   image:
     name: kuberlytics/admin-tools
     tag: latest
+jup_prePuller:
+  enabled: false
