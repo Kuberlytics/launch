@@ -25,15 +25,15 @@ This is an emerging project. Would love your comments, issues, or pull requests.
 This is a Jupyter Singleuser container with Azure CLI installed.
 Build locally:
 ```
-docker build -t kuberlytics/jupyter-singleuser-controller:latest -t kuberlytics/jupyter-singleuser-controller:v0.1 .
+docker build -t kuberlytics/admin-tools:latest -t kuberlytics/admin-tools:v0.1 .
 ```
 ### To use Locally for example.
 ```
-docker run -it --rm -p 8888:8888  -v /Users/<yourpath>/admin-tools:/home/jovyan/admin-tools --user root -e GRANT_SUDO=yes kuberlytics/jupyter-singleuser-controller:latest
+docker run -it --rm -p 8888:8888  -v /Users/<yourpath>/admin-tools:/home/jovyan/admin-tools --user root -e GRANT_SUDO=yes kuberlytics/admin-tools:latest
 ```
 ### To simulate online version without local sharing of volume.
 ```
-docker run -it --rm -p 8888:8888  --user root -e GRANT_SUDO=yes kuberlytics/jupyter-singleuser-controller:latest
+docker run -it --rm -p 8888:8888  --user root -e GRANT_SUDO=yes kuberlytics/admin-tools:latest
 ```
 
 
