@@ -67,10 +67,13 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 # Update the package list and install the Cloud SDK
 RUN apt-get update && apt-get install -yq google-cloud-sdk
-USER joyvan
-COPY  . /home/jovyan/admin-tools
-COPY  ./README.md /home/jovyan/README.md
-COPY  ./config/config.sample /home/jovyan/admin-tools/config/config.yaml
+
+COPY . /home/jovyan/admin-tools
+COPY ./README.md /home/jovyan/README.md
+COPY ./config/config.sample /home/jovyan/admin-tools/config/config.yaml
+
+RUN chown -R jovyan:100 /home/jovyan/admin-tools
+RUN chown jovyan:100 /home/jovyan/README.md
 
 USER jovyan
 RUN conda install -c conda-forge --quiet --yes \

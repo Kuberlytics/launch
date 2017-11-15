@@ -269,7 +269,7 @@ def get_jupyterhub_ip(cf_j):
     cf_j['public_ip']=[x for x in result if isipv4(x)][1]
     print("JupyterHub is live at the following address:")
     print("http://"+cf_j['public_ip']+"/hub/login")
-    return cf_j
+    
 
 def get_fixed_ip(cf_g):
     result=bash_command(cf_g['describe_fixedip']).split('\n')
