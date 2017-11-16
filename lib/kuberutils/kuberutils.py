@@ -44,6 +44,7 @@ def initialize(path,config_file):
 def gcloud_commands(cf_g):
     """This functions creates a variety of commands to augment the configuration of Kubernetes on the Google cloud platform.
     """
+    cf_g['cluster_name']=cf_g['g_cluster_name']
     cf_g['create_service_account']="gcloud iam service-accounts create "+cf_g['g_service_account_name']+ " --display-name "+ cf_g['g_service_account_name']
     cf_g['create_key']="gcloud iam service-accounts keys create "+cf_g['g_path']+"/config/gcloud/"+cf_g['g_authorization_file'] +" --iam-account "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com"
     cf_g['get_policy']="gcloud iam service-accounts get-iam-policy "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com --format json > "+cf_g['g_path']+"/config/gcloud/policy.json"
@@ -70,6 +71,7 @@ def gcloud_commands(cf_g):
 def azure_commands(cf_a):
     """This functions creates a variety of commands to augment the configuration of Kubernetes on the Google cloud platform.
     """
+    cf_a['cluster_name']=cf_a['a_cluster_name']
     cf_a['web_login']="az login"
     cf_a['login']="echo 'Service account login not yet available for Azure'"
     cf_a['create_project']="az group create --name="+cf_a['a_resource_group']+ " --location="+ cf_a['a_location']
@@ -89,7 +91,7 @@ def azure_commands(cf_a):
         cf_a['create_cluster']="az acs create --orchestrator-type=kubernetes --resource-group="+cf_a['a_resource_group'] +" --name="+cf_a['a_cluster_name']+" --dns-prefix="+cf_a['a_dns_prefix']+" --agent-count="+str(cf_a['a_num_nodes'])+" --agent-vm-size="+cf_a['a_machine_type']+" --generate-ssh-keys --no-wait"
         cf_a['describe_cluster']="az acs list  --resource-group="+cf_a['a_resource_group']
         cf_a['delete_cluster']="az acs delete  --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --no-wait"
-        cf_a['get_credentials']="az acs kubernetes get-credentials --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']
+        cf_a['get_credentials']="az acs kubernetes get-credentials --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --ssh-key-file=~/.ssh/id_rsa_"+cf_a['a_cluster_name']
         cf_a['normal_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes'])
         cf_a['class_size_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count "+str(cf_a['a_num_nodes_class'])
     cf_a['install_helm']='helm init --client-only'
@@ -97,10 +99,10 @@ def azure_commands(cf_a):
     cf_a['create_storage']= "az storage account create --resource-group="+cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --sku=Standard_LRS  --name="+cf_a['a_storage_account']+" --kind=Storage"
     cf_a['get_storage_key']="az storage account keys list --account-name="+cf_a['a_storage_account']+" --resource-group="+cf_a['a_resource_group']+" --output=json | jq .[0].value -r"
     cf_a['create_keyvault']="az keyvault create --name="+cf_a['a_cluster_name']+" --resource-group="+ cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --enabled-for-template-deployment true"
-    cf_a['backup_private_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa  --file=/home/jovyan/.ssh/id_rsa"
-    cf_a['backup_public_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa-pub  --file=/home/jovyan/.ssh/id_rsa.pub"
-    cf_a['get_private_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa "
-    cf_a['get_public_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa-pub "
+    cf_a['backup_private_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=id-rsa-"+cf_a['a_cluster_name']+" --file=~/.ssh/id_rsa_"+cf_a['a_cluster_name']
+    cf_a['backup_public_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=id-rsa"+cf_a['a_cluster_name']+"-pub --file=~/.ssh/id_rsa_"+cf_a['a_cluster_name']+".pub"
+    cf_a['get_private_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=id-rsa-"+cf_a['a_cluster_name']
+    cf_a['get_public_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=id-rsa"+cf_a['a_cluster_name']+"-pub"
     return cf_a
 
 def jupyterhub_commands(cf_j):
