@@ -96,6 +96,11 @@ def azure_commands(cf_a):
     # Can't size to 0 cf_g['a_stop_cluster']="az acs scale --resource-group="+cf_a['a_resource_group']+" --name="+cf_a['a_cluster_name']+" --new-agent-count 0"
     cf_a['create_storage']= "az storage account create --resource-group="+cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --sku=Standard_LRS  --name="+cf_a['a_storage_account']+" --kind=Storage"
     cf_a['get_storage_key']="az storage account keys list --account-name="+cf_a['a_storage_account']+" --resource-group="+cf_a['a_resource_group']+" --output=json | jq .[0].value -r"
+    cf_a['create_keyvault']="az keyvault create --name="+cf_a['a_cluster_name']+" --resource-group="+ cf_a['a_resource_group']+" --location="+cf_a['a_location']+" --enabled-for-template-deployment true"
+    cf_a['backup_private_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa  --file=/home/jovyan/.ssh/id_rsa"
+    cf_a['backup_public_key']="az keyvault secret set --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa-pub  --file=/home/jovyan/.ssh/id_rsa.pub"
+    cf_a['get_private_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa "
+    cf_a['get_public_key']="az keyvault secret show --vault-name="+ cf_a['a_cluster_name']+ " --name=idrsa-pub "
     return cf_a
 
 def jupyterhub_commands(cf_j):
@@ -269,7 +274,7 @@ def get_jupyterhub_ip(cf_j):
     cf_j['public_ip']=[x for x in result if isipv4(x)][1]
     print("JupyterHub is live at the following address:")
     print("http://"+cf_j['public_ip']+"/hub/login")
-    
+
 
 def get_fixed_ip(cf_g):
     result=bash_command(cf_g['describe_fixedip']).split('\n')
