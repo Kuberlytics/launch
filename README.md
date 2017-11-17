@@ -1,6 +1,6 @@
 
 # Kuberlytics Administrative Tools
-[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/kuberlytics/admin-tools/master)
+[![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/kuberlytics/launch/master)
 
 Jupyter is an amazing interactive tool for analytics, but did you know that you an use it to launch your own cloud based data science stack on the Google Cloud platform, Azure (coming soon), or Amazon Web Services (coming soon)? We have put together a few powerful tools here including:
 
@@ -25,21 +25,21 @@ This is an emerging project. Would love your comments, issues, or pull requests.
 This is a Jupyter Singleuser container with Azure CLI installed.
 Build locally:
 ```
-docker build -t kuberlytics/admin-tools:latest -t kuberlytics/admin-tools:v0.1 .
+docker build -t kuberlytics/launch:latest -t kuberlytics/launch:v0.1 .
 ```
 ### To use Locally for example.
 ```
-docker run -it --rm -p 8888:8888  -v /Users/<yourpath>/admin-tools:/home/jovyan/admin-tools --user root -e GRANT_SUDO=yes kuberlytics/admin-tools:latest
+docker run -it --rm -p 8888:8888  -v /Users/<yourpath>/launch:/home/jovyan/launch --user root -e GRANT_SUDO=yes kuberlytics/launch:latest
 ```
 ### To simulate online version without local sharing of volume.
 ```
-docker run -it --rm -p 8888:8888  --user root -e GRANT_SUDO=yes kuberlytics/admin-tools:latest
+docker run -it --rm -p 8888:8888  --user root -e GRANT_SUDO=yes kuberlytics/launch:latest
 ```
 
 
 #### Please set to push to 2 repositories. (Make sure ssh keys current.)
 ```
-git remote set-url --add --push origin git@github.com:Kuberlytics/admin-tools.git
-git remote set-url --add --push origin git@gitlab.com:Kuberlytics/admin-tools.git
-git remote set-url origin git@gitlab.com:Kuberlytics/admin-tools.git
+git remote set-url --add --push origin git@github.com:Kuberlytics/launch.git
+git remote set-url --add --push origin git@gitlab.com:Kuberlytics/launch.git
+git remote set-url origin git@gitlab.com:Kuberlytics/launch.git
 ```

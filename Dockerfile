@@ -70,10 +70,10 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 RUN apt-get update && apt-get install -yq google-cloud-sdk
 
 #COPY over files
-COPY . /home/${JUPYTER_USER}/admin-tools
+COPY . /home/${JUPYTER_USER}/launch
 COPY ./README.md /home/${JUPYTER_USER}/README.md
-COPY ./config/config.sample /home/${JUPYTER_USER}/admin-tools/config/config.yaml
-RUN chown -R ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/admin-tools
+COPY ./config/config.sample /home/${JUPYTER_USER}/launch/config/config.yaml
+RUN chown -R ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/launch
 RUN chown ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/README.md
 
 #TERRAFORM
