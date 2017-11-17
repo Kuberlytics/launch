@@ -43,3 +43,4 @@ git remote set-url --add --push origin git@github.com:Kuberlytics/launch.git
 git remote set-url --add --push origin git@gitlab.com:Kuberlytics/launch.git
 git remote set-url origin git@gitlab.com:Kuberlytics/launch.git
 ```
+ Please report any issues. 
