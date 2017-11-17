@@ -69,13 +69,6 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 # Update the package list and install the Cloud SDK
 RUN apt-get update && apt-get install -yq google-cloud-sdk
 
-#COPY over files
-COPY . /home/${JUPYTER_USER}/launch
-COPY ./README.md /home/${JUPYTER_USER}/README.md
-COPY ./config/config.sample /home/${JUPYTER_USER}/launch/config/config.yaml
-RUN chown -R ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/launch
-RUN chown ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/README.md
-
 #TERRAFORM
 RUN cd /tmp && \
    wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
@@ -90,6 +83,13 @@ RUN mkdir /home/${JUPYTER_USER}/ket && \
     wget https://github.com/apprenda/kismatic/releases/download/v${KISMATIC_VERSION}/kismatic-v${KISMATIC_VERSION}-linux-amd64.tar.gz && \
     tar -xzf kismatic-v${KISMATIC_VERSION}-linux-amd64.tar.gz -C /home/jovyan/ket && \
     rm kismatic-v${KISMATIC_VERSION}-linux-amd64.tar.gz
+
+#COPY over files
+COPY . /home/${JUPYTER_USER}/launch
+COPY ./README.md /home/${JUPYTER_USER}/README.md
+COPY ./config/config.sample /home/${JUPYTER_USER}/launch/config/config.yaml
+RUN chown -R ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/launch && chown ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/README.md &&mkdir /home/${JUPYTER_USER}/.ssh &&chown ${JUPYTER_USER}:$JUPYTER_GROUP /home/${JUPYTER_USER}/.ssh
+
 
 USER ${JUPYTER_USER}
 RUN conda install -c conda-forge --quiet --yes \
