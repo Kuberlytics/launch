@@ -1,8 +1,12 @@
 #Where are you running notebooks? This is used for path.
-docker: true     #True if executing on the Kuberlytics Docker Stack.
-docker_path: /home/jovyan/admin-tools      #This should not change.
-local_path: /Users/*******/admin-tools #This is the local path
+project_name: kuberlytics   #must be globably unique project
 cloud_provider: azure   #google or azure
+cluster_name: kuberlytics
+restore_config: false
+path: /home/jovyan/admin-tools/
+config_file: config/config.yaml
+ssh_dir: /home/jovyan/.ssh/
+
 #Start of Google Specific Configuration
 g_project: kuberlytics             #Google project name
 g_cluster_name: kuberlytics        #Name of your Google Cluster
@@ -32,11 +36,11 @@ a_storage_name: pach2-disk.vhd   #For use with Pachyderm
 a_storage_size: 1                #For use with Pachyderm Storage account size in GB.
 #Start of Azure Configuration
 jup_rebuild_config: true
-jup_url: launch.kuberlytics.com
+jup_url: sample.kuberlytics.com
 jup_ssl: false
 jup_email: you@yourdomain.com    #This is used for letsencrypt
-jup_namespace: dojo      #Generally the namespace and releasename should be teh same.
-jup_releasename: dojo
+jup_namespace: kuberlytics      #Generally the namespace and releasename should be the same.
+jup_releasename: kuberlytics
 jup_fixed_ip:               #Set as reserved IP address.
 jup_set_fixed_ip: false
 jup_helm_repo: https://jupyterhub.github.io/helm-chart/
@@ -59,10 +63,10 @@ jup_google_auth:
 jup_dummy_auth:
   type: dummy
   dummy:
-    password: "********"
+    password: ""
 jup_admin:
   access: true
-  users: ['********']
+  users: ['']
 jup_singleuser:
   image:
     name: kuberlytics/admin-tools
