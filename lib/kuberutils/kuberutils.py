@@ -51,7 +51,7 @@ def initialize(config):
     if cf['cloud_provider']=="azure":
         cf=azure_commands(cf)
     elif cf['cloud_provider']=="google":
-        cf=google_commands(cf)
+        cf=gcloud_commands(cf)
     cf=jupyterhub_commands(cf)
     cf['which_cluster']="kubectl config current-context"
     cf['clone_pachyderm']="git clone https://github.com/pachyderm/pachyderm /home/jovyan/work/pachyderm"
@@ -63,11 +63,11 @@ def gcloud_commands(cf_g):
     cf_g['cluster_name']=cf_g['cluster_name']
     cf_g['g_project']=cf_g['project_name']
     cf_g['create_service_account']="gcloud iam service-accounts create "+cf_g['g_service_account_name']+ " --display-name "+ cf_g['g_service_account_name']
-    cf_g['create_key']="gcloud iam service-accounts keys create "+cf_g['g_path']+"/config/gcloud/"+cf_g['g_authorization_file'] +" --iam-account "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com"
-    cf_g['get_policy']="gcloud iam service-accounts get-iam-policy "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com --format json > "+cf_g['g_path']+"/config/gcloud/policy.json"
-    cf_g['set_policy']="gcloud iam service-accounts set-iam-policy "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com "+cf_g['g_path']+"/config/gcloud/policy.json"
+    cf_g['create_key']="gcloud iam service-accounts keys create "+cf_g['path']+"/config/gcloud/"+cf_g['g_authorization_file'] +" --iam-account "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com"
+    cf_g['get_policy']="gcloud iam service-accounts get-iam-policy "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com --format json > "+cf_g['path']+"/config/gcloud/policy.json"
+    cf_g['set_policy']="gcloud iam service-accounts set-iam-policy "+cf_g['g_service_account_name']+"@"+cf_g['g_project']+".iam.gserviceaccount.com "+cf_g['path']+"/config/gcloud/policy.json"
     cf_g['web_login']="gcloud init"
-    cf_g['login']="gcloud auth activate-service-account  --key-file "+cf_g['g_path']+"/config/gcloud/"+ cf_g['g_authorization_file']
+    cf_g['login']="gcloud auth activate-service-account  --key-file "+cf_g['path']+"/config/gcloud/"+ cf_g['g_authorization_file']
     cf_g['create_project']="gcloud projects create "+cf_g['g_project']+"----set-as-default"
     cf_g['set_project']="gcloud config set project "+cf_g['g_project']
     cf_g['set_zone']="gcloud config set compute/zone "+cf_g['g_zone']
